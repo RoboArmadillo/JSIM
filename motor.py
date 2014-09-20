@@ -1,7 +1,8 @@
 import os,sys
 import serial
 import time
-ser = serial.Serial("/dev/ttyACM0",115200, timeout= 2)
+from websocket import create_connection
+ws = create_connection("ws://echo.websocket.org/")
 
 class Motor(object):
     def __init__(self, which_motor, speed = 0):
@@ -21,8 +22,9 @@ class Motor(object):
     @speed.setter
     def speed(self, value):
         self._speed = value
+
+        ws.send("1257, " + str(self.motor_side) +", "+ str(self._speed))
          
-        print "1257," + str(self.motor_side)+ str(self._speed)
             
         
         elif self._speed >100 or self._speed < -100:
@@ -32,3 +34,18 @@ class Motor(object):
     @speed.deleter
     def speed(self):
         del self._speed
+
+
+
+
+'''
+from websocket import create_connection
+    ws = create_connection("ws://echo.websocket.org/")
+    print "Sending 'Hello, World'..."
+    ws.send("Hello, World")
+    print "Sent"
+    print "Reeiving..."
+    result =  ws.recv()
+    print "Received '%s'" % result
+    ws.close()
+'''

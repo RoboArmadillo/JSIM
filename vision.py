@@ -1,5 +1,6 @@
 import os,sys
 import time
+ws = create_connection("ws://echo.websocket.org/")
 
 def width_from_code(code):
 	if code <= 27:
@@ -8,6 +9,16 @@ def width_from_code(code):
 		return 0.093 * (10.0/12.0) 
 
 def vision_see((WIDTH, HEIGHT) = (1280,1024), preview=True, preview_time=1):
+
+		ws = create_connection("ws://echo.websocket.org/")
+    	print "Sending 'Hello, World'..."
+   		ws.send("1257, Send List")
+   		print "Sent"
+   		print "Reeiving..."
+   		result =  ws.recv() #result will be some json stuff to unmuddle.
+
+
+
 		global marker_offsets
 		params = CameraParams(Point2Df(WIDTH/2, HEIGHT/2),
 								Point2Df(WIDTH, HEIGHT),
@@ -38,3 +49,14 @@ def vision_see((WIDTH, HEIGHT) = (1280,1024), preview=True, preview_time=1):
 			elif 41<=element.code<=71:
 				element.marker_type = "MARKER_TOKEN"
 		return m
+
+'''
+from websocket import create_connection
+    ws = create_connection("ws://echo.websocket.org/")
+    print "Sending 'Hello, World'..."
+    ws.send("Hello, World")
+    print "Sent"
+    print "Reeiving..."
+    result =  ws.recv()
+    ws.close()
+'''
