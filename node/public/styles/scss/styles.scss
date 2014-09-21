@@ -1,0 +1,56 @@
+@import "normalize";
+@import "button";
+/*
+*	Layout
+*/
+
+html, body {
+	color: white;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	overflow: hidden;
+}
+
+div[role=main] {
+	margin: 0;
+	max-width: 1240px;
+	margin-left: auto;
+	margin-right: auto;
+	border-top: 5px solid black;
+	padding: 10px;
+	font-weight: 500;
+	line-height: 1;
+}
+
+
+.content {
+	position: relative;
+}
+
+footer {
+	margin-top: 80px;
+	border-top: 3px dotted orange;
+}
+
+canvas {
+	display: inline-block;
+	margin: 0 auto;
+	border: 1px solid black;
+}
+
+.canvasContain {
+	width: 100%;
+   	text-align:center;
+}
+
+div#subContain {
+	display: block;
+	text-align: center;
+	width: 100%;
+	button {
+		display: block;
+		position: relative;
+		margin: 0 auto;
+		margin-top: 10px;
+		margin-bottom: 30px;
+	}
+}
