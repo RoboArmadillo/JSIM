@@ -75,8 +75,9 @@
 
     //JSIM.elements[0].rotation.z += 0.005;
     //JSIM.elements[1].rotation.y -= Math.sin(a * 0.01) * 0.01;
-    JSIM.elements[1].rotation.y += 0.005
-    JSIM.elements[1].translateX(0.005)
+    //JSIM.elements[1].rotation.y += 0.005
+    //JSIM.elements[1].translateX(0.005)
+    JSIM.elements[1].movement(100,100)
 
   }
 
@@ -152,12 +153,10 @@
   }
 
 
+//this is not going well think i did this write but then in the update function where i call it, it does fuck all
   Robot.prototype.movement = function(left_speed,right_speed){ //speeds from web socket stuff when we do it later
     this.averagespeed = (left_speed+right_speed)/2
-    JSIM.elements[1].translateX(averagespeed/400000)
-
-
-  
+    this.translateX(averagespeed/400000)
   }
 
 
