@@ -112,6 +112,9 @@
   }
 
 
+
+
+
   //Robot constructor
   function Robot(x, y, z, w, h, d, rX, rY, rZ) {
     this.x = x;
@@ -146,6 +149,15 @@
     this.mesh.rotation.z = this.rZ;
     this.mesh.rotation.y = this.rY;
 
+  }
+
+
+  Robot.prototype.movement = function(left_speed,right_speed){ //speeds from web socket stuff when we do it later
+    this.averagespeed = (left_speed+right_speed)/2
+    JSIM.elements[1].translateX(averagespeed/400000)
+
+
+  
   }
 
 
