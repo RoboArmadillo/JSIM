@@ -18,8 +18,10 @@
     JSIM.renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(JSIM.renderer.domElement);
     //Set up camera instance
-    JSIM.camera = new THREE.PerspectiveCamera(  45, window.innerWidth / window.innerHeight, 0.1, 20000 );
-    JSIM.camera.position.z = 10;
+    JSIM.camera = new THREE.PerspectiveCamera(  70, window.innerWidth / window.innerHeight, 0.1, 20000 );
+    JSIM.camera.position.z = 0;
+    JSIM.camera.position.y = 10;
+    JSIM.camera.rotation.x -=Math.PI/2
     //Init three.js scene
     JSIM.scene = new THREE.Scene();
 
@@ -44,7 +46,7 @@
   function populateEntities() {
        JSIM.plane = new Plane(10, 10, 10, 10, 0, -0.5, 0, Math.PI / 2, 0, 0, 0x00ff00);
        JSIM.plane.init();
-       JSIM.robot = new Robot(0, 0, 0, 1, 1, 1, 0, 0, 0);
+       JSIM.robot = new Robot(0, 0, 0, 0.3, 0.3, 0.5, 0, 0, 0); //this doesnt appear to change the size of the robot form 1,1,1 and i dont know why.
        JSIM.robot.init();
        JSIM.elements[JSIM.elements.length] = JSIM.plane.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.robot.mesh;
@@ -72,9 +74,10 @@
     a++;
     setTimeout(update, 1);
 
-    JSIM.elements[0].rotation.z += 0.005;
-    JSIM.elements[1].rotation.y -= Math.sin(a * 0.01) * 0.01;
-    JSIM.camera.position.y += Math.sin(a * 0.01) * 0.01;
+    //JSIM.elements[0].rotation.z += 0.005;
+    //JSIM.elements[1].rotation.y -= Math.sin(a * 0.01) * 0.01;
+    JSIM.elements[1].rotation.y += 0.005
+    JSIM.elements[1].translateX(0.005)
 
   }
 
