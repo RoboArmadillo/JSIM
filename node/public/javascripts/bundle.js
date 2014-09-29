@@ -78,7 +78,8 @@
     //JSIM.elements[1].rotation.y -= Math.sin(a * 0.01) * 0.01;
     //JSIM.elements[1].rotation.y += 0.005
     //JSIM.elements[1].translateX(0.005)
-    JSIM.elements[1].movement(100,100)
+    //JSIM.elements[1].movement(100,100) << THIS WORKS BUT DOESN'T USE MY ROBOT MOVEMENT METHOD
+    JSIM.robot.movement(100,100)
 
   }
 
