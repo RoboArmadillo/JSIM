@@ -73,7 +73,7 @@
     a++;
     setTimeout(update, 1);
 
-    JSIM.robot.movement(10,5)
+    JSIM.robot.movement(70,20)
     //JSIM.elements[1].translateX(0.005) //<< THIS WORKS BUT DOESNT USE MY ROBOT MOVEMENT METHOD
     //JSIM.robot.movement(100,100)
 
@@ -153,9 +153,14 @@
 
   Robot.prototype.movement = function(left_speed,right_speed){ //speeds from web socket stuff when we do it later
     this.averagespeed = (left_speed+right_speed)/2;
-    this.mesh.translateX(this.averagespeed/4000);
-    this.speedDifferenceConstant = (left_speed -right_speed)/2000;
-    this.mesh.rotation.y += this.speedDifferenceConstant;
+    this.mesh.translateX(this.averagespeed/8000);
+    this.moment1 = left_speed/100;
+    this.moment2 = -right_speed/100;
+    this.totalmoment = (this.moment1 +this.moment2);
+    this.mesh.rotation.y += this.totalmoment/200;
+
+    //this.speedDifferenceConstant = (left_speed -right_speed)/2000;
+    //this.mesh.rotation.y += this.speedDifferenceConstant;
   }
 
 
