@@ -20,7 +20,7 @@
     //Set up camera instance
     JSIM.camera = new THREE.PerspectiveCamera(  70, window.innerWidth / window.innerHeight, 0.1, 20000 );
     JSIM.camera.position.z = 0;
-    JSIM.camera.position.y = 10;
+    JSIM.camera.position.y = 5;
     JSIM.camera.rotation.x -=Math.PI/2
     //Init three.js scene
     JSIM.scene = new THREE.Scene();
@@ -74,7 +74,8 @@
     a++;
     setTimeout(update, 1);
 
-    JSIM.elements[1].movement(100,100) //<< THIS WORKS BUT DOESNT USE MY ROBOT MOVEMENT METHOD
+    JSIM.robot.movement(10,5)
+    //JSIM.elements[1].translateX(0.005) //<< THIS WORKS BUT DOESNT USE MY ROBOT MOVEMENT METHOD
     //JSIM.robot.movement(100,100)
 
   }
@@ -138,7 +139,7 @@
   Robot.prototype.init = function() {
 
     this.material = new THREE.MeshNormalMaterial({ color: 0x00ff00 });
-    this.geometry = new THREE.BoxGeometry(1, 1, 1);
+    this.geometry = new THREE.BoxGeometry(0.5, 0.3, 0.3); //fucking hard coding ollie ;) BIG THUMBS UP :P
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.mesh.overdraw = true;
     this.mesh.position.x = this.x;
@@ -152,8 +153,10 @@
 
 
   Robot.prototype.movement = function(left_speed,right_speed){ //speeds from web socket stuff when we do it later
-    this.averagespeed = (left_speed+right_speed)/2
-    this.mesh.translateX(averagespeed/400000)
+    this.averagespeed = (left_speed+right_speed)/2;
+    this.mesh.translateX(this.averagespeed/4000);
+    this.speedDifferenceConstant = (left_speed -right_speed)/2000;
+    this.mesh.rotation.y += this.speedDifferenceConstant;
   }
 
 
