@@ -67,7 +67,6 @@
        JSIM.wall2 = new Plane(JSIM.ARENA_WIDTH, JSIM.ARENA_HEIGHT, 1, 1, 0, JSIM.ARENA_HEIGHT/2, -JSIM.ARENA_LENGTH/2, 0, 0, 0, 0x00FF00); //green
        JSIM.wall3 = new Plane(JSIM.ARENA_LENGTH, JSIM.ARENA_HEIGHT, 1, 1, JSIM.ARENA_WIDTH/2, JSIM.ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFF0000); //red
        JSIM.wall4 = new Plane(JSIM.ARENA_LENGTH, JSIM.ARENA_HEIGHT, 1, 1, -JSIM.ARENA_WIDTH/2, JSIM.ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFFFF66); //yellow
-       //JSIM.marker = new Plane(0.4, 0.4, 1, 2, 3.99, JSIM.ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xffffff);
 
        JSIM.robot.init();
        JSIM.plane.init();
@@ -75,9 +74,6 @@
        JSIM.wall2.init();
        JSIM.wall3.init();
        JSIM.wall4.init();
-       //JSIM.marker.init();
-
-       
        
        JSIM.elements[JSIM.elements.length] = JSIM.plane.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.wall1.mesh;
@@ -85,17 +81,12 @@
        JSIM.elements[JSIM.elements.length] = JSIM.wall3.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.wall4.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.robot.mesh;
-       //JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
-       //JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
 
-
-          //Creates Wall Marker Objects
-        for (var i = JSIM.ARENA_LENGTH/(JSIM.TPWY+1); i <= JSIM.TPWY-1; i += JSIM.ARENA_LENGTH/(JSIM.TPWY+1)) {
-          JSIM.marker = new Plane(0.4, 0.4, 1, 1, 3.99, 0.25, 0, 0, Math.PI/2, 0, 0xffffff);
-          JSIM.init();
-          JSIM.wallmarkers[JSIM.wallmarkers.length] = JSIM.marker.mesh;
-        }
-
+       for (var i = 2; i >= 0; i--) {
+        JSIM.marker = new Plane(0.4, 0.4, 1, 1, i, JSIM.ARENA_HEIGHT/2, (JSIM.ARENA_LENGTH/2)-0.0001, 0, 0, 0, 0x00FF00);
+        JSIM.marker.init();
+        JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
+        };
 
   }
 
