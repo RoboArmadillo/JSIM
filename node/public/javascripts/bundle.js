@@ -48,18 +48,28 @@
   }
 
   function populateEntities() {
-       JSIM.plane = new Plane(8, 8, 1, 1, 0, 0, 0, 0, 0, 0, 0x00ff00);
+       JSIM.plane = new Plane(8, 8, 1, 1, 0, 0, 0, Math.PI/2, 0, 0, 0xFF9900);
+       JSIM.wall1 = new Plane(8, 0.5, 1, 1, 0, 0.25, 4, 0, 0, 0, 0x00ff00);
+       JSIM.wall2 = new Plane(8, 0.5, 1, 1, 0, 0.25, -4, 0, 0, 0, 0x00ff00);
+       JSIM.wall3 = new Plane(8, 0.5, 1, 1, 4, 0.25, 0, 0, Math.PI/2, 0, 0x00ff00);
+       JSIM.wall4 = new Plane(8, 0.5, 1, 1, -4, 0.25, 0, 0, Math.PI/2, 0, 0x00ff00);
 
-       //JSIM.plane2 = new Plane(2, 8, 1, 1, 0, 0, 0, Math.PI / 2, 0, 0, 0x00ff00);
 
        
 
        JSIM.plane.init();
-       //JSIM.plane2.init();
+       JSIM.wall1.init();
+       JSIM.wall2.init();
+       JSIM.wall3.init();
+       JSIM.wall4.init();
+
        JSIM.robot = new Robot(0, 0, 0, 0.5, 0.3, 0.3, 0, 0, 0); //this doesnt appear to change the size of the robot form 1,1,1 and i dont know why.
        JSIM.robot.init();
        JSIM.elements[JSIM.elements.length] = JSIM.plane.mesh;
-       //JSIM.elements[JSIM.elements.length] = JSIM.plane2.mesh;
+       JSIM.elements[JSIM.elements.length] = JSIM.wall1.mesh;
+       JSIM.elements[JSIM.elements.length] = JSIM.wall2.mesh;
+       JSIM.elements[JSIM.elements.length] = JSIM.wall3.mesh;
+       JSIM.elements[JSIM.elements.length] = JSIM.wall4.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.robot.mesh;
 
   }
@@ -105,13 +115,13 @@
     this.material = null;
     this.geometry = null;
     this.mesh = null;
-    this.color = 0x231f20
+    this.color = colour;
 
   }
 
   Plane.prototype.init = function() {
     var colour = this.color;
-    this.material = new THREE.MeshBasicMaterial( { /*map: floorTexture,*/ side: THREE.DoubleSide, color: 0x231f20} );
+    this.material = new THREE.MeshBasicMaterial( { /*map: floorTexture,*/ side: THREE.DoubleSide, color: this.color} );
     this.geometry = new THREE.PlaneGeometry(this.w, this.h, this.sW, this.sH);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
      this.mesh.position.y = this.y;
