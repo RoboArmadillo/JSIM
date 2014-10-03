@@ -52,9 +52,9 @@
 
 
        //Arena variables
-       JSIM.ARENA_WIDTH = 8 //x
-       JSIM.ARENA_LENGTH = 8 //y
-       JSIM.ARENA_HEIGHT = 0.5
+       ARENA_WIDTH = 8 //x
+       ARENA_LENGTH = 8 //y
+       ARENA_HEIGHT = 0.5
        JSIM.TPWX = 7 //TPWX = tokens per wall on the x wall
        JSIM.TWPY = 7 //TPW = tokens per wall on the y wall
 
@@ -62,11 +62,11 @@
        JSIM.robot = new Robot(0, 0.151, 0, 0.5, 0.3, 0.3, 0, 0, 0); 
 
        //Creates Arena Objects
-       JSIM.plane = new Plane(JSIM.ARENA_WIDTH, JSIM.ARENA_LENGTH, 1, 1, 0, 0, 0, Math.PI/2, 0, 0, 0xFF9900); //orange
-       JSIM.wall1 = new Plane(JSIM.ARENA_WIDTH, JSIM.ARENA_HEIGHT, 1, 1, 0, JSIM.ARENA_HEIGHT/2, JSIM.ARENA_LENGTH/2, 0, 0, 0, 0x3399FF); //blue 
-       JSIM.wall2 = new Plane(JSIM.ARENA_WIDTH, JSIM.ARENA_HEIGHT, 1, 1, 0, JSIM.ARENA_HEIGHT/2, -JSIM.ARENA_LENGTH/2, 0, 0, 0, 0x00FF00); //green
-       JSIM.wall3 = new Plane(JSIM.ARENA_LENGTH, JSIM.ARENA_HEIGHT, 1, 1, JSIM.ARENA_WIDTH/2, JSIM.ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFF0000); //red
-       JSIM.wall4 = new Plane(JSIM.ARENA_LENGTH, JSIM.ARENA_HEIGHT, 1, 1, -JSIM.ARENA_WIDTH/2, JSIM.ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFFFF66); //yellow
+       JSIM.plane = new Plane(ARENA_WIDTH, ARENA_LENGTH, 1, 1, 0, 0, 0, Math.PI/2, 0, 0, 0xFF9900); //orange
+       JSIM.wall1 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, ARENA_LENGTH/2, 0, 0, 0, 0x3399FF); //blue 
+       JSIM.wall2 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, -ARENA_LENGTH/2, 0, 0, 0, 0x00FF00); //green
+       JSIM.wall3 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFF0000); //red
+       JSIM.wall4 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, -ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFFFF66); //yellow
 
        JSIM.robot.init();
        JSIM.plane.init();
@@ -82,8 +82,12 @@
        JSIM.elements[JSIM.elements.length] = JSIM.wall4.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.robot.mesh;
 
-       for (var i = 2; i >= 0; i--) {
-        JSIM.marker = new Plane(0.4, 0.4, 1, 1, i, JSIM.ARENA_HEIGHT/2, (JSIM.ARENA_LENGTH/2)-0.0001, 0, 0, 0, 0x00FF00);
+
+
+       a = JSIM.TPWX;
+       b=ARENA_LENGTH/(JSIM.TPWY+1)
+       for (var i = a; i >= 0; i--) {
+        JSIM.marker = new Plane(0.4, 0.4, 1, 1, i * b, ARENA_HEIGHT/2, (ARENA_LENGTH/2)-0.0001, 0, 0, 0, 0x00FF00);
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
