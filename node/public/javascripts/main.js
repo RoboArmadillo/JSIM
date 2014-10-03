@@ -23,6 +23,7 @@
     JSIM.camera.position.z = 0;
     JSIM.camera.position.y = 7;
     JSIM.camera.rotation.x -=Math.PI/2
+    controls = new THREE.OrbitControls( JSIM.camera, JSIM.renderer.domElement );
 
     //Init three.js scene
     JSIM.scene = new THREE.Scene();
@@ -46,13 +47,18 @@
   }
 
   function populateEntities() {
-       JSIM.plane = new Plane(10, 10, 10, 10, 0, -0.5, 0, Math.PI / 2, 0, 0, 0x00ff00);
-       //JSIM.plane = new Plane(10, 10, 10, 10, 0, -0.5, 0, Math.PI / 2, 0, 0, 0x00ff00);
+       JSIM.plane = new Plane(8, 8, 1, 1, 0, 0, 0, 0, 0, 0, 0x00ff00);
+
+       //JSIM.plane2 = new Plane(2, 8, 1, 1, 0, 0, 0, Math.PI / 2, 0, 0, 0x00ff00);
+
+       
 
        JSIM.plane.init();
+       //JSIM.plane2.init();
        JSIM.robot = new Robot(0, 0, 0, 0.5, 0.3, 0.3, 0, 0, 0); //this doesnt appear to change the size of the robot form 1,1,1 and i dont know why.
        JSIM.robot.init();
        JSIM.elements[JSIM.elements.length] = JSIM.plane.mesh;
+       //JSIM.elements[JSIM.elements.length] = JSIM.plane2.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.robot.mesh;
 
   }
@@ -79,8 +85,7 @@
     setTimeout(update, 1);
 
     JSIM.robot.movement(100,100)
-    //JSIM.elements[1].translateX(0.005) //<< THIS WORKS BUT DOESNT USE MY ROBOT MOVEMENT METHOD
-    //JSIM.robot.movement(100,100)
+    
 
   }
 
@@ -157,7 +162,7 @@
   }
 
 
-  Robot.prototype.movement = function(left_speed,right_speed){ //speeds from web socket stuff when we do it later
+  Robot.prototype.movement = function(right_speed,left_speed){ //speeds from web socket stuff when we do it later
     this.averagespeed = (left_speed+right_speed)/2;
     this.mesh.translateX(this.averagespeed/8000);
     this.moment1 = -left_speed/100;
