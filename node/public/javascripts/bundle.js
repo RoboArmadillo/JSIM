@@ -24,7 +24,7 @@
     JSIM.camera.position.z = 0;
     JSIM.camera.position.y = 7;
     JSIM.camera.rotation.x -=Math.PI/2
-    controls = new THREE.OrbitControls( JSIM.camera, JSIM.renderer.domElement );
+    controls = new THREE.OrbitControls( JSIM.camera, JSIM.renderer.domElement ); //allows us to pan the camera around.
 
     //Init three.js scene
     JSIM.scene = new THREE.Scene();
@@ -48,11 +48,31 @@
   }
 
   function populateEntities() {
-       JSIM.plane = new Plane(8, 8, 1, 1, 0, 0, 0, Math.PI/2, 0, 0, 0xFF9900);
-       JSIM.wall1 = new Plane(8, 0.5, 1, 1, 0, 0.25, 4, 0, 0, 0, 0x00ff00);
-       JSIM.wall2 = new Plane(8, 0.5, 1, 1, 0, 0.25, -4, 0, 0, 0, 0x00ff00);
-       JSIM.wall3 = new Plane(8, 0.5, 1, 1, 4, 0.25, 0, 0, Math.PI/2, 0, 0x00ff00);
-       JSIM.wall4 = new Plane(8, 0.5, 1, 1, -4, 0.25, 0, 0, Math.PI/2, 0, 0x00ff00);
+
+
+       //Arena variables
+       JSIM.ARENA_WIDTH = 8 //x
+       JSIM.ARENA_LENGTH = 8 //y
+       JSIM.ARENA_HEIGHT = 0.5
+       JSIM.TPWX = 7 //TPWX = tokens per wall on the x wall
+       JSIM.TWPY = 7 //TPW = tokens per wall on the y wall
+
+       //Creates Arena Objects
+       JSIM.plane = new Plane(JSIM.ARENA_WIDTH, JSIM.ARENA_LENGTH, 1, 1, 0, 0, 0, Math.PI/2, 0, 0, 0xFF9900); //orange
+       JSIM.wall1 = new Plane(JSIM.ARENA_WIDTH, JSIM.ARENA_HEIGHT, 1, 1, 0, JSIM.ARENA_HEIGHT/2, JSIM.ARENA_LENGTH/2, 0, 0, 0, 0x3399FF); //blue 
+       JSIM.wall2 = new Plane(JSIM.ARENA_WIDTH, JSIM.ARENA_HEIGHT, 1, 1, 0, JSIM.ARENA_HEIGHT/2, -JSIM.ARENA_LENGTH/2, 0, 0, 0, 0x00FF00); //green
+       JSIM.wall3 = new Plane(JSIM.ARENA_LENGTH, JSIM.ARENA_HEIGHT, 1, 1, JSIM.ARENA_WIDTH/2, JSIM.ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFF0000); //red
+       JSIM.wall4 = new Plane(JSIM.ARENA_LENGTH, JSIM.ARENA_HEIGHT, 1, 1, -JSIM.ARENA_WIDTH/2, JSIM.ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFFFF66); //yellow
+
+
+       //Creates Wall Marker Objects
+       for (var i = JSIM.ARENA_LENGTH/(JSIM.TPWY+1); i <= JSIM.TPWY-1; i += JSIM.ARENA_LENGTH/(JSIM.TPWY+1)) {
+         JSIM.marker = new Plane(0.4, 0.4, 1, 1, 3.99, 0.25, 0, 0, Math.PI/2, 0, 0xffffff);
+         JSIM.wallmarkers[JSIM.wallmarkers.length] = JSIM.marker.mesh;
+
+
+
+       };
 
 
        
@@ -62,6 +82,7 @@
        JSIM.wall2.init();
        JSIM.wall3.init();
        JSIM.wall4.init();
+       //JSIM.marker.init()
 
        JSIM.robot = new Robot(0, 0, 0, 0.5, 0.3, 0.3, 0, 0, 0); //this doesnt appear to change the size of the robot form 1,1,1 and i dont know why.
        JSIM.robot.init();
@@ -71,6 +92,8 @@
        JSIM.elements[JSIM.elements.length] = JSIM.wall3.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.wall4.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.robot.mesh;
+       //JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
+
 
   }
 
@@ -95,7 +118,7 @@
     a++;
     setTimeout(update, 1);
 
-    JSIM.robot.movement(100,100)
+    JSIM.robot.movement(0,0)
     
 
   }
