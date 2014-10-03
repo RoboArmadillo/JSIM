@@ -85,10 +85,11 @@
 
 
 
-       a = JSIM.TPWX;
-       b=ARENA_LENGTH/(JSIM.TPWY+1)
+       var a = JSIM.TPWX;
+       var b=ARENA_LENGTH * 1/(JSIM.TPWX+1)
+
        for (var i = a; i >= 0; i--) {
-        JSIM.marker = new Plane(0.4, 0.4, 1, 1, i * b, ARENA_HEIGHT/2, (ARENA_LENGTH/2)-0.0001, 0, 0, 0, 0x00FF00);
+        JSIM.marker = new Plane(0.4, 0.4, 1, 1, -(ARENA_WIDTH/2) + i * b, ARENA_HEIGHT/2, (ARENA_LENGTH/2)-0.0001, 0, 0, 0, 0x00FF00);
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
