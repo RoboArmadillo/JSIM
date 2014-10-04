@@ -33,8 +33,8 @@
 
      // light
     var light = new THREE.PointLight( 0xffffff, 100,1 );
-    light.position.x = 15;
-    light.position.y = 1;
+    light.position.x = 0;
+    light.position.y = 100;
     light.position.z = 1;
     JSIM.scene.add( light );
     
@@ -59,7 +59,7 @@
        ARENA_HEIGHT = 0.5;
        JSIM.TPWX = 7; //TPWX = tokens per wall on the x wall
        JSIM.TPWY = 7; //TPWY = tokens per wall on the y wall
-       NUMBER_OF_TOKENS = 20
+       NUMBER_OF_TOKENS = 10
 
 
        JSIM.robot = new Robot(0, 0.151, 0, 0.5, 0.3, 0.3, 0, 0, 0); 
@@ -90,16 +90,47 @@
        JSIM.elements[JSIM.elements.length] = JSIM.robot.mesh;
 
 
-
+       
        for (var i = 0 ; i < NUMBER_OF_TOKENS; i++) {
-        JSIM.boxtest = new Token();
+        JSIM.boxtest = new Token((-1 + Math.random() + Math.random()) * ARENA_LENGTH/2,(-1+Math.random() + Math.random()) *ARENA_WIDTH/2);
         JSIM.boxtest.init();
         JSIM.elements[JSIM.elements.length] = JSIM.boxtest.mesh;
+      };
+      
 
 
 
-         };
 
+      /*
+
+      #############
+      OLLIE!!!!! Now I've got your attention, this algorithm should ensure that there is no overlap of the cubes when they load but it seems to crash my
+      web browser whenever I try and run it even with like 5 cubes. Fuck knows whats going on, could you peruse it at some point and try and work out what
+      is going on.
+      #############
+       xlist = [1];
+       zlist = [1];
+
+       for (var i = 0 ; i < NUMBER_OF_TOKENS; i++) {
+          generate = 1
+          x = (-1 + Math.random() + Math.random()) * ARENA_LENGTH/2;
+          z = (-1+Math.random() + Math.random()) *ARENA_WIDTH/2;
+          for (var i = xlist.length - 1; i >= 0; i--) {
+             if ((xlist[i]-0.1 <x && xlist[i]+0.1 >x)&&(zlist[i]-0.1 <z && zlist[i]+0.1 >z)) {
+                 generate = 0
+             };
+
+           };
+
+          if (generate === 1) {
+              JSIM.boxtest = new Token(x,z);
+              JSIM.boxtest.init();
+              JSIM.elements[JSIM.elements.length] = JSIM.boxtest.mesh;
+          };
+
+        };
+        */
+        
 
 
 
@@ -278,7 +309,7 @@
 
   Robot.prototype.init = function() {
 
-    this.material = new THREE.MeshNormalMaterial({ color: 0xFF9933 });
+    this.material = new THREE.MeshNormalMaterial({ color: 0xFFFFFF });
     this.geometry = new THREE.BoxGeometry(this.w, this.h, this.d);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.mesh.overdraw = true;
@@ -303,8 +334,8 @@
 
 
   //Robot constructor
-  function Token() {
-    this.x = (-1 + Math.random() + Math.random()) * ARENA_LENGTH/2
+  function Token(x,z) {
+    this.x = x;
     if (this.x<0){
       this.x +=0.06
     }
@@ -312,7 +343,7 @@
       this.x -=0.06
     }
     this.y = 0.051;
-    this.z = (-1+Math.random() + Math.random()) *ARENA_WIDTH/2
+    this.z = z;
 
     this.w = 0.1;
     this.h = 0.1;
