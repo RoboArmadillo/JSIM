@@ -60,6 +60,7 @@
        ARENA_HEIGHT = 0.5;
        JSIM.TPWX = 7; //TPWX = tokens per wall on the x wall
        JSIM.TPWY = 7; //TPWY = tokens per wall on the y wall
+       NUMBER_OF_TOKENS = 20
 
 
        JSIM.robot = new Robot(0, 0.151, 0, 0.5, 0.3, 0.3, 0, 0, 0); 
@@ -91,6 +92,14 @@
 
 
 
+       for (var i = 0 ; i < NUMBER_OF_TOKENS; i++) {
+        JSIM.boxtest = new Token();
+        JSIM.boxtest.init();
+        JSIM.elements[JSIM.elements.length] = JSIM.boxtest.mesh;
+
+
+
+         };
 
 
 
@@ -102,7 +111,7 @@
        
        //blue
        for (var i = a-1; i >= 0; i--) {
-        JSIM.marker = new Marker(0.4, 0.4, -(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, (ARENA_LENGTH/2)-0.0001, 0, 0, 0, "Arena");
+        JSIM.marker = new Marker( -(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, (ARENA_LENGTH/2)-0.0001, 0, 0, 0, "Arena");
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
@@ -112,7 +121,7 @@
         b=ARENA_WIDTH * 1/(JSIM.TPWX+1);
 
        for (var i = a-1; i >= 0; i--) {
-        JSIM.marker = new Marker(0.4, 0.4, -(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+0.0001, 0, 0, 0, "Arena");
+        JSIM.marker = new Marker(-(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+0.0001, 0, 0, 0, "Arena");
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
@@ -122,7 +131,7 @@
         b=ARENA_LENGTH * 1/(JSIM.TPWY+1);
 
        for (var i = a-1; i >= 0; i--) {
-        JSIM.marker = new Marker(0.4, 0.4, -(ARENA_WIDTH/2)+0.0001, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+ (i+1) * b, 0, Math.PI/2, 0, "Arena");
+        JSIM.marker = new Marker( -(ARENA_WIDTH/2)+0.0001, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+ (i+1) * b, 0, Math.PI/2, 0, "Arena");
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
@@ -133,7 +142,7 @@
         b=ARENA_LENGTH * 1/(JSIM.TPWY+1);
 
        for (var i = a-1; i >= 0; i--) {
-        JSIM.marker = new Marker(0.4, 0.4, (ARENA_WIDTH/2)-0.0001, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+ (i+1) * b, 0, Math.PI/2, 0, "Arena");
+        JSIM.marker = new Marker( (ARENA_WIDTH/2)-0.0001, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+ (i+1) * b, 0, Math.PI/2, 0, "Arena");
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
@@ -207,7 +216,7 @@
 
 
 
-  function Marker(w, h, x, y, z, rX, rY, rZ, marker_type) {
+  function Marker(x, y, z, rX, rY, rZ, marker_type) {
     this.marker_type = "Arena";
 
     if (this.marker_type === "Arena"){
@@ -226,14 +235,12 @@
     this.mesh = null;
     this.color = 0xFFFFFF;
     this.codey = 10;
-    this.castShadow = true;
-    this.recieveShadow = true;
 
   }
 
   Marker.prototype.init = function() {
     var colour = this.color;
-    this.material = new THREE.MeshBasicMaterial( { map: this.material, side: THREE.DoubleSide, color: this.color} );
+    this.material = new THREE.MeshBasicMaterial( { map: this.material, side: THREE.DoubleSide} );
     this.geometry = new THREE.PlaneGeometry(this.w, this.h, this.sW, this.sH);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
      this.mesh.position.y = this.y;
@@ -265,7 +272,8 @@
     this.material = null;
     this.geometry = null;
     this.mesh = null;
-    this.color = 0xFF9933
+    this.color = 0xFF9933;
+
 
   }
 
@@ -292,11 +300,45 @@
     this.moment2 = right_speed/100;
     this.totalmoment = (this.moment1 +this.moment2);
     this.mesh.rotation.y += this.totalmoment/20;
-
-    //this.speedDifferenceConstant = (left_speed -right_speed)/2000;
-    //this.mesh.rotation.y += this.speedDifferenceConstant;
   }
 
+
+  //Robot constructor
+  function Token() {
+    this.x = Math.random()*(ARENA_WIDTH-0.051) + -((ARENA_WIDTH/2)+0.050001);
+    this.y = 0.051;
+    this.z = Math.random()*(ARENA_LENGTH-0.051) + -((ARENA_LENGTH/2)+0.05001);
+
+    this.w = 0.1;
+    this.h = 0.1;
+    this.d = 0.1;
+
+    this.rX = 0;
+    this.rY = 0;
+    this.rZ = 0;
+
+    this.material = null;
+    this.geometry = null;
+    this.mesh = null;
+    this.color = 0xFF9933;
+
+
+  }
+
+  Token.prototype.init = function() {
+
+    this.material = new THREE.MeshNormalMaterial({ color: 0xFF9933 });
+    this.geometry = new THREE.BoxGeometry(this.w, this.h, this.d);
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.mesh.overdraw = true;
+    this.mesh.position.x = this.x;
+    this.mesh.position.y = this.y;
+    this.mesh.position.z = this.z;
+    this.mesh.rotation.x = this.rX;
+    this.mesh.rotation.z = this.rZ;
+    this.mesh.rotation.y = this.rY;
+
+  }
 
 
 init();
