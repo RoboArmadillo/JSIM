@@ -126,6 +126,8 @@
               JSIM.boxtest = new Token(x,z);
               JSIM.boxtest.init();
               JSIM.elements[JSIM.elements.length] = JSIM.boxtest.mesh;
+              xlist[xlist.length] = x
+              zlist[zlist.length] = y
           };
 
         };
