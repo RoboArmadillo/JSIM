@@ -53,11 +53,11 @@
 
 
        //Arena variables
-       ARENA_WIDTH = 8 //x
-       ARENA_LENGTH = 8 //y
-       ARENA_HEIGHT = 0.5
-       JSIM.TPWX = 7 //TPWX = tokens per wall on the x wall
-       JSIM.TWPY = 7 //TPW = tokens per wall on the y wall
+       ARENA_WIDTH = 10; //x
+       ARENA_LENGTH = 4; //y
+       ARENA_HEIGHT = 0.5;
+       JSIM.TPWX = 9; //TPWX = tokens per wall on the x wall
+       JSIM.TPWY = 3; //TPWY = tokens per wall on the y wall
 
 
        JSIM.robot = new Robot(0, 0.151, 0, 0.5, 0.3, 0.3, 0, 0, 0); 
@@ -85,43 +85,54 @@
 
 
 
-       var a = JSIM.TPWX;
-       var b=ARENA_LENGTH * 1/(JSIM.TPWX+1);
 
+
+
+
+       //for loops for populating the walls-yes I know its inelegant but its as good as I can get it for now.
+       var a = JSIM.TPWX;
+       var b=ARENA_WIDTH * 1/(JSIM.TPWX+1);
+
+       
+       //blue
        for (var i = a-1; i >= 0; i--) {
         JSIM.marker = new Plane(0.4, 0.4, 1, 1, -(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, (ARENA_LENGTH/2)-0.0001, 0, 0, 0, 0xFFFFFF);
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
-
-       var a = JSIM.TPWX;
-       var b=ARENA_LENGTH * 1/(JSIM.TPWX+1);
+    
+       //green
+        a = JSIM.TPWX;
+        b=ARENA_WIDTH * 1/(JSIM.TPWX+1);
 
        for (var i = a-1; i >= 0; i--) {
         JSIM.marker = new Plane(0.4, 0.4, 1, 1, -(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+0.0001, 0, 0, 0, 0xFFFFFF);
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
-
-       var a = JSIM.TPWX;
-       var b=ARENA_LENGTH * 1/(JSIM.TPWX+1);
+        
+      //yellow
+        a = JSIM.TPWY;
+        b=ARENA_LENGTH * 1/(JSIM.TPWY+1);
 
        for (var i = a-1; i >= 0; i--) {
         JSIM.marker = new Plane(0.4, 0.4, 1, 1, -(ARENA_WIDTH/2)+0.0001, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+ (i+1) * b, 0, Math.PI/2, 0, 0xFFFFFF);
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
+        
 
-
-       var a = JSIM.TPWX;
-       var b=ARENA_LENGTH * 1/(JSIM.TPWX+1);
+      //red
+        a = JSIM.TPWY;
+        b=ARENA_LENGTH * 1/(JSIM.TPWY+1);
 
        for (var i = a-1; i >= 0; i--) {
         JSIM.marker = new Plane(0.4, 0.4, 1, 1, (ARENA_WIDTH/2)-0.0001, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+ (i+1) * b, 0, Math.PI/2, 0, 0xFFFFFF);
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
-
+        
+        
 
 
 
@@ -184,6 +195,42 @@
     this.mesh.rotation.y = this.rY;
     this.mesh.rotation.z = this.rZ;
   }
+
+
+
+
+  function Marker(w, h, sW, sH, x, y, z, rX, rY, rZ, colour) {
+    this.w = w;
+    this.h = h;
+    this.sW = sW;
+    this.sH = sH;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.rX = rX;
+    this.rY = rY;
+    this.rZ = rZ;
+    this.material = null;
+    this.geometry = null;
+    this.mesh = null;
+    this.color = colour;
+    this.codey = 10;
+    this.marker_type = "Arena";
+
+  }
+
+  Plane.prototype.init = function() {
+    var colour = this.color;
+    this.material = new THREE.MeshBasicMaterial( { /*map: floorTexture,*/ side: THREE.DoubleSide, color: this.color} );
+    this.geometry = new THREE.PlaneGeometry(this.w, this.h, this.sW, this.sH);
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
+     this.mesh.position.y = this.y;
+     this.mesh.position.x = this.x;
+     this.mesh.position.z = this.z;
+    this.mesh.rotation.x = this.rX;
+    this.mesh.rotation.y = this.rY;
+    this.mesh.rotation.z = this.rZ;
+  }  
 
 
 
