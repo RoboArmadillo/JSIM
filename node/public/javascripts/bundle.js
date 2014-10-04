@@ -65,16 +65,16 @@
 
        JSIM.robot = new Robot(0, 0.151, 0, 0.5, 0.3, 0.3, 0, 0, 0); 
 
-       //black 0x231f20
+       black = 0x231f20
 
-       //orange 0xFF9900
+       orange = 0xFF9900
 
        //Creates Arena Objects
-       JSIM.plane = new Plane(ARENA_WIDTH, ARENA_LENGTH, 1, 1, 0, 0, 0, Math.PI/2, 0, 0, 0x231f20 ); //orange
-       JSIM.wall1 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, ARENA_LENGTH/2, 0, 0, 0, 0xFF9900); //blue 
-       JSIM.wall2 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, -ARENA_LENGTH/2, 0, 0, 0, 0xFF9900); //green
-       JSIM.wall3 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFF9900); //red
-       JSIM.wall4 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, -ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFF9900); //yellow
+       JSIM.plane = new Plane(ARENA_WIDTH, ARENA_LENGTH, 1, 1, 0, 0, 0, Math.PI/2, 0, 0, black ); //orange
+       JSIM.wall1 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, ARENA_LENGTH/2, 0, 0, 0, orange); //blue 
+       JSIM.wall2 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, -ARENA_LENGTH/2, 0, 0, 0, orange); //green
+       JSIM.wall3 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, orange); //red
+       JSIM.wall4 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, -ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, orange); //yellow
 
        JSIM.robot.init();
        JSIM.plane.init();
@@ -305,9 +305,15 @@
 
   //Robot constructor
   function Token() {
-    this.x = Math.random()*(ARENA_WIDTH-0.051) + -((ARENA_WIDTH/2)+0.050001);
+    this.x = (-1 + Math.random() + Math.random()) * ARENA_LENGTH/2
+    if (this.x<0){
+      this.x +=0.06
+    }
+    else{
+      this.x -=0.06
+    }
     this.y = 0.051;
-    this.z = Math.random()*(ARENA_LENGTH-0.051) + -((ARENA_LENGTH/2)+0.05001);
+    this.z = (-1+Math.random() + Math.random()) *ARENA_WIDTH/2
 
     this.w = 0.1;
     this.h = 0.1;
@@ -339,6 +345,9 @@
     this.mesh.rotation.y = this.rY;
 
   }
+
+
+
 
 
 init();
