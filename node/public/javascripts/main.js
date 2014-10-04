@@ -59,7 +59,7 @@
        ARENA_HEIGHT = 0.5;
        JSIM.TPWX = 7; //TPWX = tokens per wall on the x wall
        JSIM.TPWY = 7; //TPWY = tokens per wall on the y wall
-       NUMBER_OF_TOKENS = 10
+       NUMBER_OF_TOKENS = 4000;
 
 
        JSIM.robot = new Robot(0, 0.151, 0, 0.5, 0.3, 0.3, 0, 0, 0); 
@@ -90,33 +90,35 @@
        JSIM.elements[JSIM.elements.length] = JSIM.robot.mesh;
 
 
-       
+       /*
        for (var i = 0 ; i < NUMBER_OF_TOKENS; i++) {
         JSIM.boxtest = new Token((-1 + Math.random() + Math.random()) * ARENA_LENGTH/2,(-1+Math.random() + Math.random()) *ARENA_WIDTH/2);
         JSIM.boxtest.init();
         JSIM.elements[JSIM.elements.length] = JSIM.boxtest.mesh;
       };
+      */
       
 
 
 
 
+      
       /*
-
       #############
       OLLIE!!!!! Now I've got your attention, this algorithm should ensure that there is no overlap of the cubes when they load but it seems to crash my
       web browser whenever I try and run it even with like 5 cubes. Fuck knows whats going on, could you peruse it at some point and try and work out what
       is going on.
       #############
-       xlist = [1];
-       zlist = [1];
+      */
+       xlist = [1,2];
+       zlist = [1,2];
 
        for (var i = 0 ; i < NUMBER_OF_TOKENS; i++) {
           generate = 1
           x = (-1 + Math.random() + Math.random()) * ARENA_LENGTH/2;
           z = (-1+Math.random() + Math.random()) *ARENA_WIDTH/2;
-          for (var i = xlist.length - 1; i >= 0; i--) {
-             if ((xlist[i]-0.1 <x && xlist[i]+0.1 >x)&&(zlist[i]-0.1 <z && zlist[i]+0.1 >z)) {
+          for (var a = xlist.length - 1; a >= 0; a--) {
+             if ((xlist[a]-0.283 <x && xlist[a]+0.283 >x)&&(zlist[a]-0.283 <z && zlist[a]+0.283 >z)) {
                  generate = 0
              };
 
@@ -127,11 +129,11 @@
               JSIM.boxtest.init();
               JSIM.elements[JSIM.elements.length] = JSIM.boxtest.mesh;
               xlist[xlist.length] = x
-              zlist[zlist.length] = y
+              zlist[zlist.length] = z
           };
 
         };
-        */
+        
         
 
 
@@ -352,7 +354,7 @@
     this.d = 0.1;
 
     this.rX = 0;
-    this.rY = 0;
+    this.rY = Math.random()*Math.PI;
     this.rZ = 0;
 
     this.material = null;
