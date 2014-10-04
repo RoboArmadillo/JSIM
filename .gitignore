@@ -31,3 +31,6 @@ node/node_modules
 
 .sass-cache
 
+# Compiled JS
+
+bundle.js
