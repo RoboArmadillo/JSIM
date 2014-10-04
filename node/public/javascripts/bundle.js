@@ -15,6 +15,8 @@
   function init() {
 
     //Set up rendering instance
+     texture = THREE.ImageUtils.loadTexture('marker.png'),
+
     JSIM.renderer = new THREE.WebGLRenderer();
     JSIM.renderer.setClearColor( 0x000000, 1);
     JSIM.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -31,8 +33,8 @@
     JSIM.scene = new THREE.Scene();
 
      // light
-    var light = new THREE.PointLight( 0xffffff, 100,0 );
-    light.position.x = 4;
+    var light = new THREE.PointLight( 0xffffff, 100,1 );
+    light.position.x = 15;
     light.position.y = 1;
     light.position.z = 1;
     JSIM.scene.add( light );
@@ -53,21 +55,25 @@
 
 
        //Arena variables
-       ARENA_WIDTH = 10; //x
-       ARENA_LENGTH = 4; //y
+       ARENA_WIDTH = 8; //x
+       ARENA_LENGTH = 8; //y
        ARENA_HEIGHT = 0.5;
-       JSIM.TPWX = 9; //TPWX = tokens per wall on the x wall
-       JSIM.TPWY = 3; //TPWY = tokens per wall on the y wall
+       JSIM.TPWX = 7; //TPWX = tokens per wall on the x wall
+       JSIM.TPWY = 7; //TPWY = tokens per wall on the y wall
 
 
        JSIM.robot = new Robot(0, 0.151, 0, 0.5, 0.3, 0.3, 0, 0, 0); 
 
+       //black 0x231f20
+
+       //orange 0xFF9900
+
        //Creates Arena Objects
-       JSIM.plane = new Plane(ARENA_WIDTH, ARENA_LENGTH, 1, 1, 0, 0, 0, Math.PI/2, 0, 0, 0xFF9900); //orange
-       JSIM.wall1 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, ARENA_LENGTH/2, 0, 0, 0, 0x3399FF); //blue 
-       JSIM.wall2 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, -ARENA_LENGTH/2, 0, 0, 0, 0x00FF00); //green
-       JSIM.wall3 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFF0000); //red
-       JSIM.wall4 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, -ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFFFF66); //yellow
+       JSIM.plane = new Plane(ARENA_WIDTH, ARENA_LENGTH, 1, 1, 0, 0, 0, Math.PI/2, 0, 0, 0x231f20 ); //orange
+       JSIM.wall1 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, ARENA_LENGTH/2, 0, 0, 0, 0xFF9900); //blue 
+       JSIM.wall2 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, -ARENA_LENGTH/2, 0, 0, 0, 0xFF9900); //green
+       JSIM.wall3 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFF9900); //red
+       JSIM.wall4 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, -ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, 0xFF9900); //yellow
 
        JSIM.robot.init();
        JSIM.plane.init();
@@ -96,7 +102,7 @@
        
        //blue
        for (var i = a-1; i >= 0; i--) {
-        JSIM.marker = new Plane(0.4, 0.4, 1, 1, -(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, (ARENA_LENGTH/2)-0.0001, 0, 0, 0, 0xFFFFFF);
+        JSIM.marker = new Marker(0.4, 0.4, -(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, (ARENA_LENGTH/2)-0.0001, 0, 0, 0, "Arena");
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
@@ -106,7 +112,7 @@
         b=ARENA_WIDTH * 1/(JSIM.TPWX+1);
 
        for (var i = a-1; i >= 0; i--) {
-        JSIM.marker = new Plane(0.4, 0.4, 1, 1, -(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+0.0001, 0, 0, 0, 0xFFFFFF);
+        JSIM.marker = new Marker(0.4, 0.4, -(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+0.0001, 0, 0, 0, "Arena");
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
@@ -116,7 +122,7 @@
         b=ARENA_LENGTH * 1/(JSIM.TPWY+1);
 
        for (var i = a-1; i >= 0; i--) {
-        JSIM.marker = new Plane(0.4, 0.4, 1, 1, -(ARENA_WIDTH/2)+0.0001, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+ (i+1) * b, 0, Math.PI/2, 0, 0xFFFFFF);
+        JSIM.marker = new Marker(0.4, 0.4, -(ARENA_WIDTH/2)+0.0001, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+ (i+1) * b, 0, Math.PI/2, 0, "Arena");
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
@@ -127,7 +133,7 @@
         b=ARENA_LENGTH * 1/(JSIM.TPWY+1);
 
        for (var i = a-1; i >= 0; i--) {
-        JSIM.marker = new Plane(0.4, 0.4, 1, 1, (ARENA_WIDTH/2)-0.0001, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+ (i+1) * b, 0, Math.PI/2, 0, 0xFFFFFF);
+        JSIM.marker = new Marker(0.4, 0.4, (ARENA_WIDTH/2)-0.0001, ARENA_HEIGHT/2, -(ARENA_LENGTH/2)+ (i+1) * b, 0, Math.PI/2, 0, "Arena");
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
@@ -180,6 +186,8 @@
     this.geometry = null;
     this.mesh = null;
     this.color = colour;
+    this.castShadow = true;
+    this.recieveShadow = true;
 
   }
 
@@ -188,9 +196,9 @@
     this.material = new THREE.MeshBasicMaterial( { /*map: floorTexture,*/ side: THREE.DoubleSide, color: this.color} );
     this.geometry = new THREE.PlaneGeometry(this.w, this.h, this.sW, this.sH);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-     this.mesh.position.y = this.y;
-     this.mesh.position.x = this.x;
-     this.mesh.position.z = this.z;
+    this.mesh.position.y = this.y;
+    this.mesh.position.x = this.x;
+    this.mesh.position.z = this.z;
     this.mesh.rotation.x = this.rX;
     this.mesh.rotation.y = this.rY;
     this.mesh.rotation.z = this.rZ;
@@ -199,29 +207,33 @@
 
 
 
-  function Marker(w, h, sW, sH, x, y, z, rX, rY, rZ, colour) {
-    this.w = w;
-    this.h = h;
-    this.sW = sW;
-    this.sH = sH;
+  function Marker(w, h, x, y, z, rX, rY, rZ, marker_type) {
+    this.marker_type = "Arena";
+
+    if (this.marker_type === "Arena"){
+      this.w = this.h = 0.4;
+    }
+    this.sW = 1;
+    this.sH = 1;
     this.x = x;
     this.y = y;
     this.z = z;
     this.rX = rX;
     this.rY = rY;
     this.rZ = rZ;
-    this.material = null;
+    this.material = texture;
     this.geometry = null;
     this.mesh = null;
-    this.color = colour;
+    this.color = 0xFFFFFF;
     this.codey = 10;
-    this.marker_type = "Arena";
+    this.castShadow = true;
+    this.recieveShadow = true;
 
   }
 
-  Plane.prototype.init = function() {
+  Marker.prototype.init = function() {
     var colour = this.color;
-    this.material = new THREE.MeshBasicMaterial( { /*map: floorTexture,*/ side: THREE.DoubleSide, color: this.color} );
+    this.material = new THREE.MeshBasicMaterial( { map: this.material, side: THREE.DoubleSide, color: this.color} );
     this.geometry = new THREE.PlaneGeometry(this.w, this.h, this.sW, this.sH);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
      this.mesh.position.y = this.y;
