@@ -10,12 +10,15 @@
   var REFRESH_COLOUR = "black";
   var wallmarkers = [];
 
+  Physijs.scripts.worker = '../../node_modules/physicsmain/physijs_worker.js';
+  Physijs.scripts.ammo = '../../node_modules/physicsmain/ammo.js';
+
   //Functions
   function init() {
 
     //Set up rendering instance
-     texture = THREE.ImageUtils.loadTexture('marker.png'),
-
+          
+    texture = THREE.ImageUtils.loadTexture('crate.gif'),
     JSIM.renderer = new THREE.WebGLRenderer();
     JSIM.renderer.setClearColor( 0x000000, 1);
     JSIM.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -29,7 +32,7 @@
     controls = new THREE.OrbitControls( JSIM.camera, JSIM.renderer.domElement ); //allows us to pan the camera around.
 
     //Init three.js scene
-    JSIM.scene = new THREE.Scene();
+    JSIM.scene = new Physijs.Scene;
 
      // light
     var light = new THREE.PointLight( 0xffffff, 100,1 );
@@ -59,7 +62,7 @@
        ARENA_HEIGHT = 0.5;
        JSIM.TPWX = 7; //TPWX = tokens per wall on the x wall
        JSIM.TPWY = 7; //TPWY = tokens per wall on the y wall
-       NUMBER_OF_TOKENS = 4000;
+       NUMBER_OF_TOKENS = 3000;
 
 
        JSIM.robot = new Robot(0, 0.151, 0, 0.5, 0.3, 0.3, 0, 0, 0);
@@ -91,11 +94,11 @@
 
 
 
-       xlist = [0,2];
-       zlist = [0,2];
+       xlist = [0];
+       zlist = [0];
 
 
-       for (var n = 0 ; n < NUMBER_OF_TOKENS; n++) {
+       for (var n = 1 ; n < NUMBER_OF_TOKENS; n++) {
           generate = 1
           x = (-1 + Math.random() + Math.random()) * ARENA_LENGTH/2;
           z = (-1+Math.random() + Math.random()) *ARENA_WIDTH/2;
@@ -191,7 +194,7 @@
     a++;
     setTimeout(update, 1);
 
-    JSIM.robot.movement(0,0)
+    JSIM.robot.movement(10,10)
 
 
   }
@@ -208,7 +211,7 @@
     this.rX = rX;
     this.rY = rY;
     this.rZ = rZ;
-    this.material = null;
+    this.material = texture;
     this.geometry = null;
     this.mesh = null;
     this.color = colour;
@@ -222,6 +225,7 @@
     this.material = new THREE.MeshBasicMaterial( { /*map: floorTexture,*/ side: THREE.DoubleSide, color: this.color} );
     this.geometry = new THREE.PlaneGeometry(this.w, this.h, this.sW, this.sH);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
+    JSIM.renderer.render(JSIM.scene);
     this.mesh.position.y = this.y;
     this.mesh.position.x = this.x;
     this.mesh.position.z = this.z;
@@ -298,7 +302,7 @@
 
     this.material = new THREE.MeshNormalMaterial({ color: 0xFFFFFF });
     this.geometry = new THREE.BoxGeometry(this.w, this.h, this.d);
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.mesh = new Physijs.BoxMesh(this.geometry, this.material);
     this.mesh.overdraw = true;
     this.mesh.position.x = this.x;
     this.mesh.position.y = this.y;
@@ -352,7 +356,7 @@
 
     this.material = new THREE.MeshNormalMaterial({ color: 0xFF9933 });
     this.geometry = new THREE.BoxGeometry(this.w, this.h, this.d);
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.mesh = new Physijs.BoxMesh(this.geometry, this.material);
     this.mesh.overdraw = true;
     this.mesh.position.x = this.x;
     this.mesh.position.y = this.y;
