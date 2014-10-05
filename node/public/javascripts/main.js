@@ -37,7 +37,7 @@
     light.position.y = 100;
     light.position.z = 1;
     JSIM.scene.add( light );
-    
+
     populateEntities();
 
     //Add all of da elements
@@ -62,7 +62,7 @@
        NUMBER_OF_TOKENS = 4000;
 
 
-       JSIM.robot = new Robot(0, 0.151, 0, 0.5, 0.3, 0.3, 0, 0, 0); 
+       JSIM.robot = new Robot(0, 0.151, 0, 0.5, 0.3, 0.3, 0, 0, 0);
 
        black = 0x231f20
 
@@ -70,7 +70,7 @@
 
        //Creates Arena Objects
        JSIM.plane = new Plane(ARENA_WIDTH, ARENA_LENGTH, 1, 1, 0, 0, 0, Math.PI/2, 0, 0, black ); //orange
-       JSIM.wall1 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, ARENA_LENGTH/2, 0, 0, 0, orange); //blue 
+       JSIM.wall1 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, ARENA_LENGTH/2, 0, 0, 0, orange); //blue
        JSIM.wall2 = new Plane(ARENA_WIDTH, ARENA_HEIGHT, 1, 1, 0, ARENA_HEIGHT/2, -ARENA_LENGTH/2, 0, 0, 0, orange); //green
        JSIM.wall3 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, orange); //red
        JSIM.wall4 = new Plane(ARENA_LENGTH, ARENA_HEIGHT, 1, 1, -ARENA_WIDTH/2, ARENA_HEIGHT/2, 0, 0, Math.PI/2, 0, orange); //yellow
@@ -81,7 +81,7 @@
        JSIM.wall2.init();
        JSIM.wall3.init();
        JSIM.wall4.init();
-       
+
        JSIM.elements[JSIM.elements.length] = JSIM.plane.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.wall1.mesh;
        JSIM.elements[JSIM.elements.length] = JSIM.wall2.mesh;
@@ -90,35 +90,20 @@
        JSIM.elements[JSIM.elements.length] = JSIM.robot.mesh;
 
 
-       /*
-       for (var i = 0 ; i < NUMBER_OF_TOKENS; i++) {
-        JSIM.boxtest = new Token((-1 + Math.random() + Math.random()) * ARENA_LENGTH/2,(-1+Math.random() + Math.random()) *ARENA_WIDTH/2);
-        JSIM.boxtest.init();
-        JSIM.elements[JSIM.elements.length] = JSIM.boxtest.mesh;
-      };
-      */
-      
+
+       xlist = [0,2];
+       zlist = [0,2];
 
 
-
-
-      
-      /*
-      #############
-      OLLIE!!!!! Now I've got your attention, this algorithm should ensure that there is no overlap of the cubes when they load but it seems to crash my
-      web browser whenever I try and run it even with like 5 cubes. Fuck knows whats going on, could you peruse it at some point and try and work out what
-      is going on.
-      #############
-      */
-       xlist = [1,2];
-       zlist = [1,2];
-
-       for (var i = 0 ; i < NUMBER_OF_TOKENS; i++) {
+       for (var n = 0 ; n < NUMBER_OF_TOKENS; n++) {
           generate = 1
           x = (-1 + Math.random() + Math.random()) * ARENA_LENGTH/2;
           z = (-1+Math.random() + Math.random()) *ARENA_WIDTH/2;
           for (var a = xlist.length - 1; a >= 0; a--) {
              if ((xlist[a]-0.283 <x && xlist[a]+0.283 >x)&&(zlist[a]-0.283 <z && zlist[a]+0.283 >z)) {
+                 generate = 0
+             };
+            if ((xlist[0]-0.72 <x && xlist[0]+0.72 >x)&&(zlist[0]-0.72 <z && zlist[0]+0.72 >z)) {
                  generate = 0
              };
 
@@ -133,8 +118,6 @@
           };
 
         };
-        
-        
 
 
 
@@ -142,14 +125,14 @@
        var a = JSIM.TPWX;
        var b=ARENA_WIDTH * 1/(JSIM.TPWX+1);
 
-       
+
        //blue
        for (var i = a-1; i >= 0; i--) {
         JSIM.marker = new Marker( -(ARENA_WIDTH/2) + (i+1) * b, ARENA_HEIGHT/2, (ARENA_LENGTH/2)-0.0001, 0, 0, 0, "Arena");
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
-    
+
        //green
         a = JSIM.TPWX;
         b=ARENA_WIDTH * 1/(JSIM.TPWX+1);
@@ -159,7 +142,7 @@
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
-        
+
       //yellow
         a = JSIM.TPWY;
         b=ARENA_LENGTH * 1/(JSIM.TPWY+1);
@@ -169,7 +152,7 @@
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
-        
+
 
       //red
         a = JSIM.TPWY;
@@ -180,8 +163,8 @@
         JSIM.marker.init();
         JSIM.elements[JSIM.elements.length] = JSIM.marker.mesh;
         };
-        
-        
+
+
 
 
 
@@ -200,7 +183,7 @@
       render();
     });
 
-  
+
   }
 
   var a = 0;
@@ -209,7 +192,7 @@
     setTimeout(update, 1);
 
     JSIM.robot.movement(0,0)
-    
+
 
   }
 
@@ -283,7 +266,7 @@
     this.mesh.rotation.x = this.rX;
     this.mesh.rotation.y = this.rY;
     this.mesh.rotation.z = this.rZ;
-  }  
+  }
 
 
 
@@ -387,6 +370,3 @@
 init();
 
   //Methods
-
-
- 
